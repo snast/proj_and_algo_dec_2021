@@ -46,7 +46,68 @@ class SLL {
 
 
     }
-    
+    //remove a specific element, 1st occurence, optional: removing all occurences
+    remove(val) {
+        if(this.size === 0) {
+            return false;
+        }
+
+        if(this.head.val === val) {
+            this.head = this.head.next;
+            this.size--;
+            return true;
+        }
+
+        var currNode = this.head;
+        var prevNode;
+        //Keep moving runners forward if currNode != val or if there are still nodes in front of curr node
+        while(currNode.next !== null && currNode.val !== val) {
+            prevNode = currNode;
+            currNode = currNode.next;
+        }
+
+        //currNode is either the value we are looking for or the last node in the list
+        if(currNode.val === val) {
+            prevNode.next = currNode.next;
+            this.size--;
+
+            return true;
+        }
+
+        return false;
+
+
+        
+
+
+
+    }
+    //remove an element at a certain index
+    removeAt(index) {
+        if(index < 0 || index > this.size || this.size === 0) {
+            return false;
+        }
+        // set up the runners to keep track of nodes
+        var currNode = this.head;
+        var prevNode;
+        //If index is 0, update head to head.next
+        if(index == 0) {
+            this.head = currNode.next;
+        } else {
+            //Index > 0, we need to point prev.next to curr.next
+            var currIndex = 0;
+            while(currIndex!==index) {
+                prevNode = currNode;
+                currNode = currNode.next;
+                currIndex++;
+            }
+
+            //we want to delete currNode, and set prev.next to curr.next
+            prevNode.next = currNode.next;
+        }
+        this.size--;
+        return true;
+    }
 
     // - Time Complexity - O(n)
     insertAt(val, index) {
@@ -95,19 +156,38 @@ class SLL {
 }
 var mySLL = new SLL();
 mySLL.addToFront(3);
-mySLL.printValues();
+// mySLL.printValues();
 mySLL.addToFront(2);
 mySLL.addToFront(1);
 mySLL.addToEnd(4);
-mySLL.printValues();
+// mySLL.printValues();
 mySLL.addToEnd(5);
-mySLL.printValues();
+// mySLL.printValues();
 mySLL.insertAt(-1,0);
-mySLL.printValues();
+// mySLL.printValues();
 mySLL.insertAt(21,3);
-mySLL.printValues();
+// mySLL.printValues();
 mySLL.insertAt(891,7);
+// mySLL.printValues();
+console.log("The size of the SLL is " + mySLL.size);
+mySLL.removeAt(3);
+// mySLL.printValues();
+mySLL.removeAt(0);
+// mySLL.printValues();
+mySLL.removeAt(5);
+// mySLL.printValues();
+mySLL.removeAt(-10);
+// mySLL.printValues();
+mySLL.removeAt(20);
 mySLL.printValues();
+mySLL.remove(1);
+mySLL.printValues();
+mySLL.remove(4);
+mySLL.printValues();
+
+console.log("The size of the SLL is " + mySLL.size);
+
+
 
 //Big O Notation
 // Worst case scenario, time complexity, measuring how efficient an algorithm is, space complexity
